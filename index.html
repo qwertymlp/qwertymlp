@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Вы заспавнили 0 бананов @monacogamebot</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <style>
+
+        body {
+
+            margin: 0;
+
+            height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background-color: black;
+
+            overflow: hidden;
+
+            cursor: pointer;
+
+            user-select: none;
+
+            position: relative;
+
+            overflow-x: hidden;
+
+        }
+
+
+
+        .victory-message {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            background-color: yellow;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100vw;
+
+            height: 100vh;
+
+            justify-content: center;
+
+            align-items: center;
+
+            z-index: 9999;
+
+            display: none;
+
+        }
+
+
+
+        .victory-text {
+
+            font-size: 24px;
+
+            color: black;
+
+            margin-bottom: 10px;
+
+        }
+
+
+
+        .check-link {
+
+            font-size: 18px;
+
+            text-decoration: none;
+
+            color: blue;
+
+        }
+
+
+
+        .press-text {
+
+            font-size: 24px;
+
+            color: white;
+
+            position: absolute;
+
+        }
+
+
+
+        .stars {
+
+            position: absolute;
+
+            width: 100%;
+
+            height: 100%;
+
+            background-image: url('https://image.flaticon.com/icons/svg/201/201717.svg'); 
+
+            animation: starsMove 20s linear infinite;
+
+        }
+
+
+
+        .banana {
+
+            position: absolute;
+
+            width: 30px;
+
+            height: auto;
+
+            transform: translate(-50%, -50%);
+
+        }
+
+
+
+        *:active, *:focus {
+
+            -webkit-tap-highlight-color: transparent;
+
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+            outline: none;
+
+        }
+
+
+
+        @keyframes starsMove {
+
+            0% {
+
+                transform: translate(0, 0);
+
+            }
+
+            100% {
+
+                transform: translate(-100%, -100%);
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="press-text" id="press-text">Жми Жми!</div>
+
+    <div class="stars"></div>
+
+    <div class="victory-message" style="display: none;">
+
+        <span class="victory-text">Победа!!!</span>
+
+        <a class="check-link" target="_blank" onclick="showChat()">Получить чек</a>
+
+    </div>
+
+    <script>
+
+        let totalClicks = 0;
+
+        const chek = 'https://t.me/MonacoGamebot?start=Chekopagop';
+
+
+
+        function showVictoryScreen() {
+
+            const victoryElement = document.querySelector(".victory-message");
+
+            const checkLink = victoryElement.querySelector(".check-link");
+
+            victoryElement.style.display = "block";
+
+            checkLink.style.display = "inline";
+
+        }
+
+
+
+        function getRandomMessage() {
+
+            totalClicks++;
+
+            document.title = `Вы заспавнили ${totalClicks} бананов @monacogamebot`;
+
+
+
+            const messages = [
+
+                "victory",
+
+                "lose",
+
+                "lose"
+
+            ];
+
+
+
+            const randomNumber = Math.random();
+
+
+
+            if (randomNumber < 0.000005) {
+
+                return messages[0];
+
+            } else if (randomNumber < 0.9) {
+
+                return messages[1];
+
+            } else {
+
+                return messages[2];
+
+            }
+
+        }
+
+        
+
+        function showChat() {
+
+            const chatLink = atob("aHR0cHM6Ly90LmUvdG1lL01vbmFjb0dhbWVib3Q/c3RhcnQ9Q2hla2thY2tpbA==");
+
+            const chatAnchor = document.createElement("a");
+
+            chatAnchor.href = chatLink;
+
+            chatAnchor.target = "_blank";
+
+            chatAnchor.textContent = "Нажмите чтобы активировать";
+
+            
+
+            const victoryElement = document.querySelector(".victory-message");
+
+            victoryElement.innerHTML = "";
+
+            victoryElement.appendChild(chatAnchor);
+
+            victoryElement.style.display = "block";
+
+        }
+
+        
+
+        document.body.addEventListener("click", function(event) {
+
+            const pressText = document.getElementById("press-text");
+
+            pressText.style.display = "none"; 
+
+
+
+            const victoryElement = document.querySelector(".victory-message");
+
+            if (!victoryElement.style.display || victoryElement.style.display === "none") {
+
+                const message = getRandomMessage();
+
+
+
+                if (message === "victory") {
+
+                    showVictoryScreen();
+
+                } else if (message === "lose") {
+
+                    const banana = new Image();
+
+                    banana.src = "https://cdn-icons-png.flaticon.com/512/6321/6321853.png";
+
+                    banana.className = "banana";
+
+                    banana.style.width = "30px"; 
+
+                    banana.style.height = "auto"; 
+
+                    banana.style.top = (event.clientY) + "px";
+
+                    banana.style.left = (event.clientX) + "px";
+
+                    document.body.appendChild(banana);
+
+                    setTimeout(function() {
+
+                        document.body.removeChild(banana);
+
+                    }, 5000);
+
+                }
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
